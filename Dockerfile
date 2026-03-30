@@ -37,11 +37,11 @@ ENV HOSTNAME="0.0.0.0"
 
 # Non-root user for security
 RUN addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 nextjs
+    && adduser --system --uid 1001 nextjs \
+    && apk add --no-cache curl
 
-# Standalone output embeds the build path as a subdirectory.
-# In Docker with WORKDIR /app, server.js is at .next/standalone/app/server.js
-COPY --from=builder /app/.next/standalone/app ./
+# Standalone output — server.js is at the root of the standalone directory.
+COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 

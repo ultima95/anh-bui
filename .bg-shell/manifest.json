@@ -1,16 +1,1 @@
-[
-  {
-    "id": "76101e8f",
-    "label": "next-dev-2",
-    "command": "cd /Users/ultima/Workspace/portfolio/anhbui && DATABASE_URL='postgresql://postgres:DuyThinh@95@112.197.2.168:5432/portfolio' npm run dev 2>&1",
-    "cwd": "/Users/ultima/Workspace/portfolio/anhbui",
-    "ownerSessionFile": "/Users/ultima/.gsd/sessions/--Users-ultima-Workspace-portfolio-anhbui--/2026-03-30T05-03-05-514Z_da215976-c57a-422d-a896-3b9a656217e1.jsonl",
-    "persistAcrossSessions": false,
-    "startedAt": 1774850636877,
-    "processType": "server",
-    "group": null,
-    "readyPattern": null,
-    "readyPort": 3000,
-    "pid": 8623
-  }
-]
+[]

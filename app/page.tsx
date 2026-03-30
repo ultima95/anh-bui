@@ -7,7 +7,7 @@ import {
   experience,
   contact,
 } from "@/src/lib/schema";
-import { asc } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import Header from "@/app/components/Header";
 import Hero from "@/app/components/sections/Hero";
 import About from "@/app/components/sections/About";
@@ -28,15 +28,22 @@ import type {
 export const dynamic = "force-dynamic";
 
 async function getData() {
+  const siteId = process.env.SITE_ID;
+  if (!siteId) {
+    throw new Error(
+      "SITE_ID env var is required. Set it to your site's identifier (e.g. SITE_ID=anh)."
+    );
+  }
+
   try {
     const [heroData, aboutData, projectsData, skillsData, expData, contactData] =
       await Promise.all([
-        db.select().from(hero).limit(1),
-        db.select().from(about).limit(1),
-        db.select().from(projects).orderBy(asc(projects.displayOrder)),
-        db.select().from(skills).orderBy(asc(skills.displayOrder)),
-        db.select().from(experience).orderBy(asc(experience.displayOrder)),
-        db.select().from(contact).limit(1),
+        db.select().from(hero).where(eq(hero.siteId, siteId)).limit(1),
+        db.select().from(about).where(eq(about.siteId, siteId)).limit(1),
+        db.select().from(projects).where(eq(projects.siteId, siteId)).orderBy(asc(projects.displayOrder)),
+        db.select().from(skills).where(eq(skills.siteId, siteId)).orderBy(asc(skills.displayOrder)),
+        db.select().from(experience).where(eq(experience.siteId, siteId)).orderBy(asc(experience.displayOrder)),
+        db.select().from(contact).where(eq(contact.siteId, siteId)).limit(1),
       ]);
 
     return {

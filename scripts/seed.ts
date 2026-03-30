@@ -1,13 +1,14 @@
 /**
  * seed.ts — inserts representative development data into all content tables.
- * Idempotent: clears existing data before inserting.
+ * Idempotent: deletes existing rows for the active SITE_ID before reinserting.
  *
- * Usage: npm run db:seed
+ * Usage: SITE_ID=anh npm run db:seed
  */
 import { config } from "dotenv";
 config({ path: ".env.local", override: true });
 
 import { drizzle } from "drizzle-orm/node-postgres";
+import { eq } from "drizzle-orm";
 import { Pool } from "pg";
 import {
   hero,
@@ -25,19 +26,29 @@ async function main() {
     process.exit(1);
   }
 
+  const siteId = process.env.SITE_ID;
+  if (!siteId) {
+    console.error("[seed] ERROR: SITE_ID is not set. Example: SITE_ID=anh npm run db:seed");
+    process.exit(1);
+  }
+
+  console.log(`[seed] Seeding site_id="${siteId}"...`);
+
   const pool = new Pool({ connectionString });
   const db = drizzle(pool);
 
-  console.log("[seed] Clearing existing data...");
-  await db.delete(hero);
-  await db.delete(about);
-  await db.delete(contact);
-  await db.delete(projects);
-  await db.delete(skills);
-  await db.delete(experience);
+  // Delete only this site's rows — safe when multiple sites share the DB
+  console.log("[seed] Clearing existing data for this site...");
+  await db.delete(experience).where(eq(experience.siteId, siteId));
+  await db.delete(skills).where(eq(skills.siteId, siteId));
+  await db.delete(projects).where(eq(projects.siteId, siteId));
+  await db.delete(contact).where(eq(contact.siteId, siteId));
+  await db.delete(about).where(eq(about.siteId, siteId));
+  await db.delete(hero).where(eq(hero.siteId, siteId));
 
   console.log("[seed] Inserting hero...");
   await db.insert(hero).values({
+    siteId,
     name: "Anh Bui",
     tagline: "Frontend Developer",
     description:
@@ -49,12 +60,14 @@ async function main() {
 
   console.log("[seed] Inserting about...");
   await db.insert(about).values({
+    siteId,
     bio: "I'm a frontend developer with a passion for crafting clean, user-focused interfaces. I enjoy working at the intersection of design and engineering — turning thoughtful designs into polished, accessible web experiences.\n\nWhen I'm not coding, I'm exploring design systems, contributing to open-source projects, or learning new tools in the JavaScript ecosystem.",
     avatarUrl: null,
   });
 
   console.log("[seed] Inserting contact...");
   await db.insert(contact).values({
+    siteId,
     email: "anh@example.com",
     githubUrl: "https://github.com/anhbui",
     linkedinUrl: "https://linkedin.com/in/anhbui",
@@ -64,6 +77,7 @@ async function main() {
   console.log("[seed] Inserting projects...");
   await db.insert(projects).values([
     {
+      siteId,
       title: "Portfolio Site",
       description:
         "A self-hosted portfolio with a built-in admin panel for managing content. Built with Next.js 15, Drizzle ORM, and PostgreSQL. Deployed via Docker Compose on a VPS.",
@@ -75,6 +89,7 @@ async function main() {
       displayOrder: 1,
     },
     {
+      siteId,
       title: "Task Manager App",
       description:
         "A drag-and-drop task management app with real-time updates. Supports boards, lists, and cards with keyboard navigation and full accessibility.",
@@ -86,6 +101,7 @@ async function main() {
       displayOrder: 2,
     },
     {
+      siteId,
       title: "Weather Dashboard",
       description:
         "A responsive weather dashboard that fetches forecasts from the OpenWeather API. Includes location search, 7-day forecast, and chart visualisations.",
@@ -100,21 +116,22 @@ async function main() {
 
   console.log("[seed] Inserting skills...");
   await db.insert(skills).values([
-    { name: "React", category: "Frontend", proficiencyLevel: 5, displayOrder: 1 },
-    { name: "TypeScript", category: "Frontend", proficiencyLevel: 4, displayOrder: 2 },
-    { name: "Next.js", category: "Frontend", proficiencyLevel: 4, displayOrder: 3 },
-    { name: "Tailwind CSS", category: "Frontend", proficiencyLevel: 5, displayOrder: 4 },
-    { name: "HTML & CSS", category: "Frontend", proficiencyLevel: 5, displayOrder: 5 },
-    { name: "Node.js", category: "Backend", proficiencyLevel: 3, displayOrder: 6 },
-    { name: "PostgreSQL", category: "Backend", proficiencyLevel: 3, displayOrder: 7 },
-    { name: "Git", category: "Tools", proficiencyLevel: 4, displayOrder: 8 },
-    { name: "Docker", category: "Tools", proficiencyLevel: 3, displayOrder: 9 },
-    { name: "Figma", category: "Tools", proficiencyLevel: 3, displayOrder: 10 },
+    { siteId, name: "React", category: "Frontend", proficiencyLevel: 5, displayOrder: 1 },
+    { siteId, name: "TypeScript", category: "Frontend", proficiencyLevel: 4, displayOrder: 2 },
+    { siteId, name: "Next.js", category: "Frontend", proficiencyLevel: 4, displayOrder: 3 },
+    { siteId, name: "Tailwind CSS", category: "Frontend", proficiencyLevel: 5, displayOrder: 4 },
+    { siteId, name: "HTML & CSS", category: "Frontend", proficiencyLevel: 5, displayOrder: 5 },
+    { siteId, name: "Node.js", category: "Backend", proficiencyLevel: 3, displayOrder: 6 },
+    { siteId, name: "PostgreSQL", category: "Backend", proficiencyLevel: 3, displayOrder: 7 },
+    { siteId, name: "Git", category: "Tools", proficiencyLevel: 4, displayOrder: 8 },
+    { siteId, name: "Docker", category: "Tools", proficiencyLevel: 3, displayOrder: 9 },
+    { siteId, name: "Figma", category: "Tools", proficiencyLevel: 3, displayOrder: 10 },
   ]);
 
   console.log("[seed] Inserting experience...");
   await db.insert(experience).values([
     {
+      siteId,
       company: "Freelance",
       position: "Frontend Developer",
       startDate: "Mar 2024",
@@ -125,6 +142,7 @@ async function main() {
       displayOrder: 1,
     },
     {
+      siteId,
       company: "Tech Internship Co.",
       position: "Frontend Intern",
       startDate: "Jun 2023",
@@ -136,7 +154,7 @@ async function main() {
     },
   ]);
 
-  console.log("[seed] Done. All tables populated.");
+  console.log(`[seed] Done. All tables populated for site_id="${siteId}".`);
   await pool.end();
 }
 

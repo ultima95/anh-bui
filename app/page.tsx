@@ -91,7 +91,7 @@ export default async function Page() {
   return (
     <>
       <Header />
-      <main className="pt-16">
+      <main>
         <Hero data={data.hero} />
         <About data={data.about} />
         <Projects data={data.projects} />

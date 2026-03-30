@@ -79,6 +79,7 @@ async function main() {
     {
       siteId,
       title: "Portfolio Site",
+      slug: "portfolio-site",
       description:
         "A self-hosted portfolio with a built-in admin panel for managing content. Built with Next.js 15, Drizzle ORM, and PostgreSQL. Deployed via Docker Compose on a VPS.",
       techStack: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Docker"],
@@ -91,6 +92,7 @@ async function main() {
     {
       siteId,
       title: "Task Manager App",
+      slug: "task-manager-app",
       description:
         "A drag-and-drop task management app with real-time updates. Supports boards, lists, and cards with keyboard navigation and full accessibility.",
       techStack: ["React", "TypeScript", "Vite", "Zustand"],
@@ -103,6 +105,7 @@ async function main() {
     {
       siteId,
       title: "Weather Dashboard",
+      slug: "weather-dashboard",
       description:
         "A responsive weather dashboard that fetches forecasts from the OpenWeather API. Includes location search, 7-day forecast, and chart visualisations.",
       techStack: ["React", "Recharts", "OpenWeather API"],

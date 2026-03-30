@@ -19,8 +19,10 @@ export async function POST(req: NextRequest) {
   if (!title || !description) {
     return NextResponse.json({ error: "title and description are required" }, { status: 400 });
   }
+  // Derive slug from title if not explicitly supplied (matches migration backfill logic)
+  const slug: string = body.slug?.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const rows = await db.insert(projects).values({
-    siteId, title, description,
+    siteId, title, slug, description,
     techStack: Array.isArray(techStack) ? techStack : [],
     imageUrl: imageUrl || null,
     demoUrl: demoUrl || null,

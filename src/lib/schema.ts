@@ -69,19 +69,24 @@ export const contact = pgTable(
 // Multi-row content tables — rows are scoped by site_id
 // ---------------------------------------------------------------------------
 
-export const projects = pgTable("projects", {
-  id: serial("id").primaryKey(),
-  siteId: text("site_id").notNull(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  techStack: text("tech_stack").array().notNull().default([]),
-  imageUrl: text("image_url"),
-  demoUrl: text("demo_url"),
-  githubUrl: text("github_url"),
-  featured: boolean("featured").notNull().default(false),
-  displayOrder: integer("display_order").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+export const projects = pgTable(
+  "projects",
+  {
+    id: serial("id").primaryKey(),
+    siteId: text("site_id").notNull(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    description: text("description").notNull(),
+    techStack: text("tech_stack").array().notNull().default([]),
+    imageUrl: text("image_url"),
+    demoUrl: text("demo_url"),
+    githubUrl: text("github_url"),
+    featured: boolean("featured").notNull().default(false),
+    displayOrder: integer("display_order").notNull().default(0),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => [unique("projects_slug_site_id_unique").on(t.siteId, t.slug)]
+);
 
 export const skills = pgTable("skills", {
   id: serial("id").primaryKey(),

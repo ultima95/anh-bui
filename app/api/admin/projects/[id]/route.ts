@@ -10,9 +10,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { id } = await params;
   const body = await req.json();
   const { title, description, techStack, imageUrl, demoUrl, githubUrl, featured, displayOrder } = body;
+  // Accept explicit slug; if omitted, derive from title
+  const slug: string | undefined = body.slug?.trim() || undefined;
 
   await db.update(projects).set({
     title, description,
+    ...(slug !== undefined ? { slug } : {}),
     techStack: Array.isArray(techStack) ? techStack : [],
     imageUrl: imageUrl || null,
     demoUrl: demoUrl || null,

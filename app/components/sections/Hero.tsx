@@ -29,6 +29,22 @@ export default function Hero({ data }: { data: HeroRow | null }) {
         }}
       />
 
+      {/* Ghost background text */}
+      <div
+        className="absolute right-[-2%] top-1/2 -translate-y-1/2 pointer-events-none select-none"
+        aria-hidden="true"
+        style={{
+          animation: "driftSlow 40s linear infinite",
+          willChange: "transform",
+        }}
+      >
+        <span
+          className="font-display font-black text-[min(22vw,18rem)] leading-none text-foreground opacity-[0.03] block max-w-full"
+        >
+          DEVELOPER
+        </span>
+      </div>
+
       <div className="relative max-w-5xl mx-auto w-full pt-24 pb-20">
         {/* Availability badge */}
         <div
@@ -47,9 +63,16 @@ export default function Hero({ data }: { data: HeroRow | null }) {
           {data.tagline}
         </p>
 
+        {/* Thin drawn rule */}
+        <div
+          className="w-12 h-px bg-accent/30 origin-left mb-8"
+          aria-hidden="true"
+          style={{ animation: "drawLine 0.5s ease 0.14s both" }}
+        />
+
         {/* Name — display typeface */}
         <h1
-          style={{ animation: "fadeUp 0.8s ease 0.16s both" }}
+          style={{ animation: "clipReveal 0.7s ease 0.22s both" }}
           className="font-display font-black text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-tight text-foreground mb-8"
         >
           <span className="relative inline-block">
@@ -93,6 +116,20 @@ export default function Hero({ data }: { data: HeroRow | null }) {
             </a>
           )}
         </div>
+      </div>
+
+      {/* Corner label */}
+      <div
+        className="absolute bottom-12 right-6 hidden sm:block"
+        aria-hidden="true"
+        style={{ animation: "fadeIn 0.8s ease 1.2s both" }}
+      >
+        <span
+          className="block text-[10px] tracking-[0.18em] uppercase text-muted/40 font-mono"
+          style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+        >
+          PORTFOLIO · 2025
+        </span>
       </div>
 
       {/* Scroll indicator */}

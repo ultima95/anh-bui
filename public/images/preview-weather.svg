@@ -1,0 +1,101 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0C1445"/>
+      <stop offset="100%" stop-color="#1A3A6B"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#sky)"/>
+
+  <!-- Subtle cloud shapes -->
+  <ellipse cx="650" cy="100" rx="120" ry="40" fill="rgba(255,255,255,0.03)"/>
+  <ellipse cx="200" cy="140" rx="90" ry="28" fill="rgba(255,255,255,0.025)"/>
+
+  <!-- Top bar -->
+  <text x="40" y="48" fill="rgba(255,255,255,0.5)" font-size="11" letter-spacing="1">WEATHER DASHBOARD</text>
+
+  <!-- Search bar -->
+  <rect x="550" y="28" width="210" height="32" rx="16" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <text x="568" y="49" fill="rgba(255,255,255,0.5)" font-size="11">🔍  Search city...</text>
+
+  <!-- Main temperature display -->
+  <text x="40" y="180" fill="white" font-size="110" font-weight="700" letter-spacing="-6" opacity="0.95">23°</text>
+
+  <!-- Condition -->
+  <text x="44" y="210" fill="rgba(255,255,255,0.7)" font-size="18" font-weight="300">Partly Cloudy</text>
+
+  <!-- Location + date -->
+  <text x="44" y="240" fill="rgba(255,255,255,0.45)" font-size="12">Ho Chi Minh City · Mon 30 Mar</text>
+
+  <!-- Feels like / humidity / wind -->
+  <rect x="44" y="262" width="360" height="50" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="76" y="283" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="9.5">FEELS LIKE</text>
+  <text x="76" y="301" text-anchor="middle" fill="white" font-size="14" font-weight="600">21°C</text>
+  <line x1="136" y1="270" x2="136" y2="304" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="194" y="283" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="9.5">HUMIDITY</text>
+  <text x="194" y="301" text-anchor="middle" fill="white" font-size="14" font-weight="600">72%</text>
+  <line x1="252" y1="270" x2="252" y2="304" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="310" y="283" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="9.5">WIND</text>
+  <text x="310" y="301" text-anchor="middle" fill="white" font-size="14" font-weight="600">14 km/h</text>
+
+  <!-- 5-day forecast -->
+  <text x="460" y="90" fill="rgba(255,255,255,0.4)" font-size="10" letter-spacing="1.5">5-DAY FORECAST</text>
+
+  <!-- Forecast items -->
+  <!-- Mon (today) highlighted -->
+  <rect x="454" y="105" width="72" height="130" rx="12" fill="rgba(96,165,250,0.25)" stroke="rgba(96,165,250,0.4)" stroke-width="1"/>
+  <text x="490" y="125" text-anchor="middle" fill="white" font-size="10" font-weight="600">MON</text>
+  <text x="490" y="164" text-anchor="middle" fill="white" font-size="30" font-weight="300">⛅</text>
+  <text x="490" y="200" text-anchor="middle" fill="white" font-size="16" font-weight="600">23°</text>
+  <text x="490" y="218" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">17°</text>
+
+  <rect x="536" y="105" width="72" height="130" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="572" y="125" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">TUE</text>
+  <text x="572" y="164" text-anchor="middle" fill="white" font-size="30" font-weight="300">🌧</text>
+  <text x="572" y="200" text-anchor="middle" fill="white" font-size="16" font-weight="600">19°</text>
+  <text x="572" y="218" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">14°</text>
+
+  <rect x="618" y="105" width="72" height="130" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="654" y="125" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">WED</text>
+  <text x="654" y="164" text-anchor="middle" fill="white" font-size="30" font-weight="300">☀️</text>
+  <text x="654" y="200" text-anchor="middle" fill="white" font-size="16" font-weight="600">27°</text>
+  <text x="654" y="218" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">20°</text>
+
+  <rect x="700" y="105" width="72" height="130" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="736" y="125" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">THU</text>
+  <text x="736" y="164" text-anchor="middle" fill="white" font-size="30" font-weight="300">⛅</text>
+  <text x="736" y="200" text-anchor="middle" fill="white" font-size="16" font-weight="600">25°</text>
+  <text x="736" y="218" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">18°</text>
+
+  <!-- Hourly chart -->
+  <text x="460" y="268" fill="rgba(255,255,255,0.4)" font-size="10" letter-spacing="1.5">HOURLY</text>
+  <rect x="454" y="278" width="322" height="90" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- Chart line -->
+  <polyline points="474,340 514,328 554,316 594,320 634,308 674,314 714,330 754,338"
+    fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Chart area fill -->
+  <path d="M474,340 514,328 554,316 594,320 634,308 674,314 714,330 754,338 754,360 474,360 Z"
+    fill="rgba(96,165,250,0.1)"/>
+
+  <!-- Hour labels -->
+  <text x="474" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">6AM</text>
+  <text x="514" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">9AM</text>
+  <text x="554" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">12PM</text>
+  <text x="594" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">3PM</text>
+  <text x="634" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">6PM</text>
+  <text x="674" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">9PM</text>
+  <text x="714" y="355" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">12AM</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="390" width="800" height="60" fill="rgba(0,0,0,0.3)"/>
+  <text x="40" y="422" fill="rgba(255,255,255,0.3)" font-size="10">Data from OpenWeather API</text>
+  <text x="600" y="422" fill="rgba(255,255,255,0.3)" font-size="10">Last updated: 2 min ago</text>
+</svg>

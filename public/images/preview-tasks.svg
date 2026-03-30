@@ -1,0 +1,95 @@
+<svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <!-- Dark background -->
+  <rect width="800" height="450" fill="#0F172A"/>
+
+  <!-- Subtle grid -->
+  <defs>
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#grid)"/>
+
+  <!-- Top bar -->
+  <rect width="800" height="50" fill="#1E293B"/>
+  <text x="24" y="31" fill="white" font-size="13" font-weight="700">TaskFlow</text>
+  <rect x="100" y="17" width="1" height="16" fill="rgba(255,255,255,0.15)"/>
+  <text x="114" y="31" fill="#64748B" font-size="11">My Workspace</text>
+
+  <!-- + New Task button -->
+  <rect x="676" y="13" width="100" height="28" rx="6" fill="#F59E0B"/>
+  <text x="726" y="31" text-anchor="middle" fill="#111" font-size="11" font-weight="700">+ New Task</text>
+
+  <!-- Board label -->
+  <text x="24" y="80" fill="white" font-size="15" font-weight="700">Sprint 3 — Development</text>
+  <text x="24" y="98" fill="#475569" font-size="11">12 tasks · 4 in progress · 5 done</text>
+
+  <!-- Column: To Do -->
+  <rect x="24" y="116" width="230" height="26" rx="6" fill="#1E293B"/>
+  <circle cx="39" cy="129" r="5" fill="#475569"/>
+  <text x="52" y="134" fill="#94A3B8" font-size="11" font-weight="600">TO DO</text>
+  <rect x="204" y="120" width="18" height="18" rx="4" fill="#334155"/>
+  <text x="213" y="132" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="700">4</text>
+
+  <!-- To Do cards -->
+  <rect x="24" y="150" width="230" height="70" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="38" y="163" width="48" height="14" rx="3" fill="rgba(99,102,241,0.25)"/>
+  <text x="62" y="174" text-anchor="middle" fill="#818CF8" font-size="8.5" font-weight="600">FEATURE</text>
+  <text x="38" y="194" fill="#E2E8F0" font-size="11" font-weight="500">Add drag-and-drop sorting</text>
+  <text x="38" y="209" fill="#475569" font-size="9.5">Assigned to you · 2d ago</text>
+
+  <rect x="24" y="228" width="230" height="70" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="38" y="241" width="36" height="14" rx="3" fill="rgba(239,68,68,0.2)"/>
+  <text x="56" y="252" text-anchor="middle" fill="#F87171" font-size="8.5" font-weight="600">BUG</text>
+  <text x="38" y="272" fill="#E2E8F0" font-size="11" font-weight="500">Fix mobile scroll overflow</text>
+  <text x="38" y="287" fill="#475569" font-size="9.5">High priority · 1d ago</text>
+
+  <rect x="24" y="306" width="230" height="70" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="38" y="333" fill="#E2E8F0" font-size="11" font-weight="500">Write unit tests for filters</text>
+  <text x="38" y="348" fill="#475569" font-size="9.5">Unassigned · 3d ago</text>
+
+  <!-- Column: In Progress -->
+  <rect x="284" y="116" width="230" height="26" rx="6" fill="#1E293B"/>
+  <circle cx="299" cy="129" r="5" fill="#F59E0B"/>
+  <text x="312" y="134" fill="#94A3B8" font-size="11" font-weight="600">IN PROGRESS</text>
+  <rect x="464" y="120" width="18" height="18" rx="4" fill="#334155"/>
+  <text x="473" y="132" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="700">3</text>
+
+  <!-- In Progress cards -->
+  <rect x="284" y="150" width="230" height="86" rx="8" fill="#1E293B" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+  <rect x="298" y="163" width="44" height="14" rx="3" fill="rgba(245,158,11,0.2)"/>
+  <text x="320" y="174" text-anchor="middle" fill="#FCD34D" font-size="8.5" font-weight="600">ACTIVE</text>
+  <text x="298" y="194" fill="#E2E8F0" font-size="11" font-weight="500">Board column reordering UI</text>
+  <text x="298" y="210" fill="#475569" font-size="9.5">You · started today</text>
+  <!-- Progress bar -->
+  <rect x="298" y="222" width="202" height="4" rx="2" fill="#334155"/>
+  <rect x="298" y="222" width="130" height="4" rx="2" fill="#F59E0B"/>
+
+  <rect x="284" y="244" width="230" height="70" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="298" y="270" fill="#E2E8F0" font-size="11" font-weight="500">Keyboard navigation support</text>
+  <text x="298" y="286" fill="#475569" font-size="9.5">In review · 1d ago</text>
+
+  <rect x="284" y="322" width="230" height="54" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="298" y="348" fill="#E2E8F0" font-size="11" font-weight="500">Dark mode implementation</text>
+  <text x="298" y="364" fill="#475569" font-size="9.5">2h ago</text>
+
+  <!-- Column: Done -->
+  <rect x="544" y="116" width="230" height="26" rx="6" fill="#1E293B"/>
+  <circle cx="559" cy="129" r="5" fill="#22c55e"/>
+  <text x="572" y="134" fill="#94A3B8" font-size="11" font-weight="600">DONE</text>
+  <rect x="724" y="120" width="18" height="18" rx="4" fill="#334155"/>
+  <text x="733" y="132" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="700">5</text>
+
+  <!-- Done cards (slightly faded) -->
+  <rect x="544" y="150" width="230" height="64" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <text x="558" y="174" fill="#94A3B8" font-size="11" font-weight="500">Auth flow with JWT</text>
+  <text x="558" y="190" fill="#334155" font-size="9.5">✓ Merged 2d ago</text>
+
+  <rect x="544" y="222" width="230" height="64" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <text x="558" y="246" fill="#94A3B8" font-size="11" font-weight="500">Project card component</text>
+  <text x="558" y="262" fill="#334155" font-size="9.5">✓ Merged 3d ago</text>
+
+  <rect x="544" y="294" width="230" height="64" rx="8" fill="#1E293B" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <text x="558" y="318" fill="#94A3B8" font-size="11" font-weight="500">Database schema design</text>
+  <text x="558" y="334" fill="#334155" font-size="9.5">✓ Merged 5d ago</text>
+</svg>

@@ -8,6 +8,7 @@ import {
   contact,
 } from "@/src/lib/schema";
 import { asc, eq } from "drizzle-orm";
+import type { Metadata } from "next";
 import Header from "@/app/components/Header";
 import Hero from "@/app/components/sections/Hero";
 import About from "@/app/components/sections/About";
@@ -26,6 +27,36 @@ import type {
 
 // Always fetch fresh content from DB — admin edits must reflect without rebuild
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteId = process.env.SITE_ID;
+  if (!siteId) return {};
+  try {
+    const [heroData] = await db
+      .select({ name: hero.name, tagline: hero.tagline, description: hero.description })
+      .from(hero)
+      .where(eq(hero.siteId, siteId))
+      .limit(1);
+    if (!heroData) return {};
+    const title = `${heroData.name} — ${heroData.tagline}`;
+    return {
+      title,
+      description: heroData.description,
+      openGraph: {
+        title,
+        description: heroData.description,
+        type: "website",
+      },
+      twitter: {
+        card: "summary",
+        title,
+        description: heroData.description,
+      },
+    };
+  } catch {
+    return {};
+  }
+}
 
 async function getData() {
   const siteId = process.env.SITE_ID;

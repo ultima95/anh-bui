@@ -66,3 +66,4 @@ vendor/
 coverage/
 .cache/
 tmp/
+pnpm-lock.yaml

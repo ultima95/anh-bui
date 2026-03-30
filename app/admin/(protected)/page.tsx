@@ -6,11 +6,12 @@ export default async function AdminPage() {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
-          { label: "Hero & About", href: "/admin/content", description: "Edit your headline, bio, and intro" },
-          { label: "Projects", href: "/admin/projects", description: "Add, edit, or remove projects" },
-          { label: "Skills", href: "/admin/skills", description: "Manage your skills and proficiency" },
-          { label: "Experience", href: "/admin/experience", description: "Update your work history" },
-          { label: "Contact", href: "/admin/contact", description: "Edit contact links and info" },
+          { label: "Hero & About", href: "/admin/content",    description: "Edit your headline, bio, and intro" },
+          { label: "Projects",    href: "/admin/projects",    description: "Add, edit, or remove projects" },
+          { label: "Skills",      href: "/admin/skills",      description: "Manage your skills and proficiency" },
+          { label: "Experience",  href: "/admin/experience",  description: "Update your work history" },
+          { label: "Contact",     href: "/admin/contact",     description: "Edit contact links and info" },
+          { label: "Settings",    href: "/admin/settings",    description: "Change your admin password" },
         ].map((item) => (
           <a
             key={item.href}

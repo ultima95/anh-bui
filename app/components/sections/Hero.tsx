@@ -44,7 +44,7 @@ export default function Hero({ data }: { data: HeroRow | null }) {
           style={{ animation: "fadeUp 0.7s ease 0.08s both" }}
           className="font-display text-sm font-medium tracking-[0.2em] uppercase text-muted mb-5 select-none"
         >
-          Frontend Developer
+          {data.tagline}
         </p>
 
         {/* Name — display typeface */}

@@ -6,7 +6,17 @@ export default function About({ data }: { data: AboutRow | null }) {
   if (!data) return null;
 
   return (
-    <section id="about" className="py-28 px-6 max-w-5xl mx-auto">
+    <section id="about" className="py-28 px-6 max-w-5xl mx-auto overflow-hidden relative">
+      {/* Ghost numeral */}
+      <div
+        className="absolute right-[-2%] top-1/4 pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        <span className="font-display font-black text-[clamp(10rem,22vw,20rem)] leading-none text-foreground opacity-[0.03] block">
+          01
+        </span>
+      </div>
+
       <ScrollReveal>
         {/* Section label */}
         <div className="flex items-center gap-3 mb-14">
@@ -14,6 +24,12 @@ export default function About({ data }: { data: AboutRow | null }) {
           <span className="h-px w-8 bg-accent/40" aria-hidden="true" />
           <h2 className="text-xs tracking-[0.18em] uppercase text-muted font-medium">About</h2>
         </div>
+        {/* Drawn accent rule */}
+        <div
+          className="w-12 h-px bg-accent/30 origin-left mt-3"
+          aria-hidden="true"
+          style={{ animation: "drawLine 0.5s ease 0.14s both" }}
+        />
       </ScrollReveal>
 
       <div className="grid md:grid-cols-[1fr_200px] gap-12 md:gap-16 items-start">

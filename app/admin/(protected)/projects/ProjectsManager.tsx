@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 interface Project {
   id: number;
   title: string;
+  slug: string;
   description: string;
   techStack: string[];
   imageUrl: string | null;
@@ -15,7 +16,7 @@ interface Project {
 }
 
 const BLANK: Omit<Project, "id"> = {
-  title: "", description: "", techStack: [], imageUrl: null,
+  title: "", slug: "", description: "", techStack: [], imageUrl: null,
   demoUrl: null, githubUrl: null, featured: false, displayOrder: 0,
 };
 
@@ -169,6 +170,7 @@ function ProjectForm({
       <p className="text-sm font-medium">{title}</p>
       <div className="grid grid-cols-2 gap-3">
         <F label="Title *" value={data.title} onChange={(v) => onChange({ ...data, title: v })} />
+        <F label="Slug" value={data.slug} onChange={(v) => onChange({ ...data, slug: v })} />
         <F label="Order" value={String(data.displayOrder)} type="number" onChange={(v) => onChange({ ...data, displayOrder: Number(v) })} />
         <F label="Demo URL" value={data.demoUrl ?? ""} onChange={(v) => onChange({ ...data, demoUrl: v })} />
         <F label="GitHub URL" value={data.githubUrl ?? ""} onChange={(v) => onChange({ ...data, githubUrl: v })} />

@@ -1,24 +1,6 @@
 import ScrollReveal from "@/app/components/ui/ScrollReveal";
 import type { SkillRow } from "@/app/types";
 
-function SkillBar({ name, level }: { name: string; level: number }) {
-  const pct = Math.round((level / 5) * 100);
-  return (
-    <li className="space-y-1.5">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-medium text-foreground">{name}</span>
-        <span className="text-[11px] text-muted tabular-nums">{pct}%</span>
-      </div>
-      <div className="h-[3px] rounded-full bg-black/[0.07] overflow-hidden" role="progressbar" aria-valuenow={level} aria-valuemin={0} aria-valuemax={5} aria-label={`${name} proficiency`}>
-        <div
-          className="h-full rounded-full bg-accent"
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-    </li>
-  );
-}
-
 export default function Skills({ data }: { data: SkillRow[] }) {
   if (data.length === 0) return null;
 
@@ -45,9 +27,16 @@ export default function Skills({ data }: { data: SkillRow[] }) {
               <h3 className="text-[10px] font-bold tracking-[0.16em] uppercase text-muted/50 mb-5">
                 {category}
               </h3>
-              <ul className="space-y-4">
+              <ul className="flex flex-wrap gap-2">
                 {categorySkills.map((skill) => (
-                  <SkillBar key={skill.id} name={skill.name} level={skill.proficiencyLevel} />
+                  <li key={skill.id} className="inline-flex">
+                    <span
+                      className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-black/[0.05] text-foreground/80 border border-black/[0.07]"
+                      aria-label={skill.name}
+                    >
+                      {skill.name}
+                    </span>
+                  </li>
                 ))}
               </ul>
             </div>

@@ -2,8 +2,11 @@
  * seed.ts — inserts representative development data into all content tables.
  * Idempotent: clears existing data before inserting.
  *
- * Usage: npx tsx scripts/seed.ts
+ * Usage: npm run db:seed
  */
+import { config } from "dotenv";
+config({ path: ".env.local", override: true });
+
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import {

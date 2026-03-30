@@ -2,8 +2,12 @@
  * migrate.ts — runs pending Drizzle migrations against DATABASE_URL.
  * Called on container startup before the Next.js server starts.
  *
- * Usage: npx tsx scripts/migrate.ts
+ * Usage: npm run db:migrate
  */
+import { config } from "dotenv";
+// Load .env.local for local dev; in Docker, DATABASE_URL is injected via env
+config({ path: ".env.local", override: true });
+
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";

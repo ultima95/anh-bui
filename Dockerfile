@@ -24,6 +24,14 @@ ENV NODE_ENV=production
 
 RUN npm run build
 
+# Compile migrate script into a single portable CJS bundle (no tsx needed at runtime)
+RUN node_modules/.bin/esbuild scripts/migrate.ts \
+    --bundle \
+    --platform=node \
+    --format=cjs \
+    --outfile=migrate.bundle.js \
+    --external:pg-native
+
 # ============================================================
 # Stage 3: Production runtime (minimal standalone image)
 # ============================================================
@@ -44,10 +52,16 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+# Migration script bundle + SQL migrations
+COPY --from=builder /app/migrate.bundle.js ./migrate.js
+COPY --from=builder /app/drizzle ./drizzle
+# Entrypoint: run migrations then start server
+COPY docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh \
+    && chown -R nextjs:nodejs /app
 
-RUN chown -R nextjs:nodejs /app
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["./docker-entrypoint.sh"]

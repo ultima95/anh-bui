@@ -25,7 +25,7 @@ cp .env.example .env
 #    At minimum: SESSION_SECRET, SITE_ID, and POSTGRES_PASSWORD
 nano .env
 
-# 4. Boot the full stack (postgres → migrate → app)
+# 4. Boot the stack
 docker compose up
 
 # 5. Visit http://localhost:3000
@@ -33,7 +33,7 @@ docker compose up
 
 On first boot, `docker compose up`:
 1. Starts PostgreSQL and waits until it is healthy
-2. Runs database migrations automatically (`scripts/migrate.ts`)
+2. Runs database migrations (bundled into the app container entrypoint)
 3. Starts the Next.js app on port 3000
 
 ---
@@ -198,7 +198,7 @@ src/
 scripts/
   migrate.ts        # Migration runner
   seed.ts           # Development data seeder
-docker-compose.yml  # Full stack: postgres + migrate + app
+docker-compose.yml  # Full stack: postgres + app (migrations run on startup)
 Dockerfile          # Multi-stage build (builder → runner)
 .env.example        # Environment variable template
 ```

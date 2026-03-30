@@ -35,6 +35,23 @@
   to   { transform: scaleX(1); }
 }
 
+@keyframes clipReveal {
+  from { clip-path: inset(110% 0 0 0); transform: translateY(12px); }
+  to   { clip-path: inset(0% 0 0 0);   transform: translateY(0); }
+}
+
+@keyframes driftSlow {
+  0%   { transform: translate(0, 0) rotate(-1deg); }
+  33%  { transform: translate(8px, -12px) rotate(-0.5deg); }
+  66%  { transform: translate(-6px, 6px) rotate(-1.5deg); }
+  100% { transform: translate(0, 0) rotate(-1deg); }
+}
+
+@keyframes drawLine {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to   { transform: scaleX(1); transform-origin: left center; }
+}
+
 /* ─────────────────────────────────────────
    Scroll reveal
 ───────────────────────────────────────── */

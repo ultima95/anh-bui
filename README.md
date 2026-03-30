@@ -1,36 +1,204 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Anh Bui
 
-## Getting Started
+A Next.js portfolio site with a CMS-style admin panel. Content (hero, about, projects, skills, experience, contact) is stored in PostgreSQL and managed through `/admin`. Designed to support multiple independent portfolio sites from a single codebase via `SITE_ID`.
 
-First, run the development server:
+---
+
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) (v2.x+)
+- `openssl` for generating secrets (available on macOS/Linux by default)
+
+---
+
+## Quick Start (Docker)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1. Clone the repository
+git clone <repo-url> portfolio
+cd portfolio
+
+# 2. Create your environment file
+cp .env.example .env
+
+# 3. Fill in the required values (see Environment Variables below)
+#    At minimum: SESSION_SECRET, SITE_ID, and POSTGRES_PASSWORD
+nano .env
+
+# 4. Boot the full stack (postgres → migrate → app)
+docker compose up
+
+# 5. Visit http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+On first boot, `docker compose up`:
+1. Starts PostgreSQL and waits until it is healthy
+2. Runs database migrations automatically (`scripts/migrate.ts`)
+3. Starts the Next.js app on port 3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## First-Time Setup
 
-## Learn More
+After the stack is running, create your admin password:
 
-To learn more about Next.js, take a look at the following resources:
+1. Open [http://localhost:3000/admin/setup](http://localhost:3000/admin/setup)
+2. Enter a password — it is stored as a bcrypt hash in the database
+3. Log in at [http://localhost:3000/admin](http://localhost:3000/admin)
+4. Fill in your content from the admin panel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **Note:** The `/admin/setup` route is only available when no admin password has been set. It becomes unavailable once the password is configured.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Copy `.env.example` to `.env` and fill in all values before running `docker compose up`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | ✅ | PostgreSQL connection string. Use `postgres` as the hostname inside Docker Compose. |
+| `SITE_ID` | ✅ | Short slug identifying this portfolio site (e.g. `anh`). Scopes all database rows. |
+| `SESSION_SECRET` | ✅ | Min 32-char random string for session encryption. Generate: `openssl rand -hex 32` |
+| `POSTGRES_PASSWORD` | ✅ | Password for the `postgres` database user (used by the Docker Compose postgres service). |
+| `S3_ENDPOINT` | — | URL of your S3-compatible storage (e.g. MinIO). Required for image uploads. |
+| `S3_BUCKET` | — | Bucket name for uploaded images. |
+| `S3_ACCESS_KEY` | — | S3 access key ID. |
+| `S3_SECRET_KEY` | — | S3 secret access key. |
+| `S3_REGION` | — | S3 region (default: `us-east-1`). |
+
+Generate a strong session secret:
+
+```bash
+openssl rand -hex 32
+```
+
+---
+
+## Seeding Development Data (Optional)
+
+The seed script inserts representative data for local development. It is idempotent — it clears and re-inserts rows for the active `SITE_ID`.
+
+```bash
+# From a running local dev environment (not Docker):
+SITE_ID=anh npm run db:seed
+
+# Or directly:
+SITE_ID=anh npx tsx scripts/seed.ts
+```
+
+> **Warning:** The seed script deletes all existing rows for the given `SITE_ID` before inserting. Do not run it against a production database.
+
+---
+
+## Multi-Site: Running Multiple Portfolios
+
+`SITE_ID` scopes all database content to a single portfolio. Multiple deployments can share one PostgreSQL instance — each with a different `SITE_ID`.
+
+**Example: two sites sharing one database**
+
+```bash
+# Site 1: .env
+SITE_ID=anh
+DATABASE_URL=postgresql://postgres:password@db:5432/portfolio
+
+# Site 2: .env (separate deployment)
+SITE_ID=jane
+DATABASE_URL=postgresql://postgres:password@db:5432/portfolio
+```
+
+Each site manages its own content independently through its own `/admin` panel. There is no cross-site data leakage — all queries filter on `site_id`.
+
+**Running a second site locally:**
+
+```bash
+# Clone to a separate directory
+git clone <repo-url> portfolio-jane
+cd portfolio-jane
+
+cp .env.example .env
+# Set SITE_ID=jane, same DATABASE_URL as site 1, different port
+# Edit docker-compose.yml ports: "3001:3000"
+
+docker compose up
+```
+
+---
+
+## S3 Image Uploads
+
+Image uploads (project thumbnails, etc.) use an S3-compatible storage backend. [MinIO](https://min.io/) is recommended for self-hosting.
+
+Set the following variables in `.env`:
+
+```dotenv
+S3_ENDPOINT=https://your-minio.example.com
+S3_BUCKET=portfolio
+S3_ACCESS_KEY=your-access-key
+S3_SECRET_KEY=your-secret-key
+S3_REGION=us-east-1
+```
+
+If these variables are omitted, the image upload feature is disabled and images are not accepted by the API.
+
+---
+
+## Local Development (Without Docker)
+
+For fast iteration without containers:
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start a local PostgreSQL instance (e.g. via Homebrew or a cloud DB)
+
+# 3. Create a local env file (Next.js reads this over .env)
+cp .env.example .env.local
+# Edit .env.local — set DATABASE_URL to your local postgres (hostname: localhost)
+
+# 4. Run migrations
+npm run db:migrate
+
+# 5. Optionally seed development data
+npm run db:seed
+
+# 6. Start the dev server (hot reload enabled)
+npm run dev
+```
+
+The dev server runs at [http://localhost:3000](http://localhost:3000).
+
+**Useful scripts:**
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Next.js dev server with hot reload |
+| `npm run build` | Production build |
+| `npm run db:migrate` | Run database migrations |
+| `npm run db:seed` | Seed development data for current `SITE_ID` |
+| `npm run db:studio` | Open Drizzle Studio (database GUI) |
+
+---
+
+## Project Structure
+
+```
+app/
+  (site)/           # Public portfolio pages
+  admin/
+    (protected)/    # Admin pages (require authentication)
+    login/          # Login page (public)
+    setup/          # First-time password setup (public)
+src/
+  lib/
+    schema.ts       # Drizzle ORM schema
+    db.ts           # Database connection
+  actions/          # Next.js server actions
+scripts/
+  migrate.ts        # Migration runner
+  seed.ts           # Development data seeder
+docker-compose.yml  # Full stack: postgres + migrate + app
+Dockerfile          # Multi-stage build (builder → runner)
+.env.example        # Environment variable template
+```

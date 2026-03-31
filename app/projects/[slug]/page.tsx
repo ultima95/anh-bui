@@ -5,6 +5,15 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { buildMetadata, getBaseUrl } from "@/src/lib/seo";
+
+function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003C")
+    .replace(/>/g, "\\u003E")
+    .replace(/&/g, "\\u0026");
+}
 
 export const dynamic = "force-dynamic";
 
@@ -23,10 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       .where(and(eq(projects.siteId, siteId), eq(projects.slug, slug)))
       .limit(1);
     if (!project) return {};
-    return {
+    return buildMetadata({
       title: project.title,
       description: project.description,
-    };
+      path: `/projects/${slug}`,
+    });
   } catch {
     return {};
   }
@@ -40,18 +50,35 @@ export default async function ProjectDetailPage({ params }: Props) {
     throw new Error("SITE_ID env var is required.");
   }
 
-  const [project] = await db
-    .select()
-    .from(projects)
-    .where(and(eq(projects.siteId, siteId), eq(projects.slug, slug)))
-    .limit(1);
+  const [headersList, [project]] = await Promise.all([
+    headers(),
+    db
+      .select()
+      .from(projects)
+      .where(and(eq(projects.siteId, siteId), eq(projects.slug, slug)))
+      .limit(1),
+  ]);
 
   if (!project) {
     notFound();
   }
 
+  const baseUrl = getBaseUrl(headersList);
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: project.title,
+    description: project.description,
+    url: `${baseUrl}/projects/${slug}`,
+  };
+
   return (
     <main className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(webPageSchema) }}
+      />
       <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
         {/* Back link */}
         <Link

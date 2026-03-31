@@ -5,12 +5,19 @@ export default function Experience({ data }: { data: ExperienceRow[] }) {
   if (data.length === 0) return null;
 
   return (
-    <section id="experience" className="py-28 px-6 max-w-5xl mx-auto border-t border-black/[0.06] overflow-hidden relative">
+    <section
+      id="experience"
+      className="py-28 px-6 max-w-5xl mx-auto border-t border-black/[0.06] overflow-hidden relative"
+    >
       <ScrollReveal>
         <div className="flex items-center gap-3 mb-14">
-          <span className="font-display text-xs font-bold text-accent tracking-wider">04</span>
+          <span className="font-display text-xs font-bold text-accent tracking-wider">
+            04
+          </span>
           <span className="h-px w-8 bg-accent/40" aria-hidden="true" />
-          <h2 className="text-xs tracking-[0.18em] uppercase text-muted font-medium">Experience</h2>
+          <h2 className="text-xs tracking-[0.18em] uppercase text-muted font-medium">
+            Experience
+          </h2>
         </div>
         {/* Drawn accent rule */}
         <div
@@ -22,11 +29,16 @@ export default function Experience({ data }: { data: ExperienceRow[] }) {
 
       <ol className="relative space-y-0">
         {/* Vertical line */}
-        <li className="absolute left-[6px] top-3 bottom-3 w-px bg-black/[0.08] hidden sm:block pointer-events-none" aria-hidden="true" />
+        <li
+          className="absolute left-[6px] top-3 bottom-3 w-px bg-black/[0.08] hidden sm:block pointer-events-none"
+          aria-hidden="true"
+        />
 
         {data.map((entry, i) => (
           <ScrollReveal key={entry.id} delay={i * 80}>
-            <li className="relative sm:pl-10 pb-12 last:pb-0">
+            <li
+              className={`relative sm:pl-10 ${i === data.length - 1 ? "pb-0" : "pb-12"}`}
+            >
               {/* Timeline dot */}
               <div
                 className="absolute left-0 top-2 w-[13px] h-[13px] rounded-full bg-background ring-2 ring-accent hidden sm:block"

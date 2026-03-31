@@ -73,9 +73,9 @@ export default function Hero({ data }: { data: HeroRow | null }) {
         {/* Name — display typeface */}
         <h1
           style={{ animation: "clipReveal 0.7s ease 0.22s both" }}
-          className="font-display font-black text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-tight text-foreground mb-8"
+          className="font-display font-black text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-tight text-foreground mb-8 pb-3 overflow-visible"
         >
-          <span className="relative inline-block">
+          <span className="relative inline-block pb-1">
             {data.name}
             <span
               className="absolute bottom-2 left-0 w-full h-1 bg-accent origin-left"

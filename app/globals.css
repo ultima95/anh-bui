@@ -36,8 +36,8 @@
 }
 
 @keyframes clipReveal {
-  from { clip-path: inset(110% 0 0 0); transform: translateY(12px); }
-  to   { clip-path: inset(0% 0 0 0);   transform: translateY(0); }
+  from { clip-path: inset(110% 0 -20% 0); transform: translateY(12px); }
+  to   { clip-path: inset(0% 0 -20% 0);   transform: translateY(0); }
 }
 
 @keyframes driftSlow {

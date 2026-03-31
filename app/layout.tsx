@@ -22,11 +22,19 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Anh Bui — Frontend Developer",
-  description:
-    "Frontend developer building accessible, performant web interfaces. Currently seeking junior frontend roles.",
-};
+import { headers } from "next/headers";
+import { getBaseUrl } from "@/src/lib/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const baseUrl = getBaseUrl(headersList);
+  return {
+    metadataBase: new URL(baseUrl),
+    title: "Anh Bui — Frontend Developer",
+    description:
+      "Frontend developer building accessible, performant web interfaces. Currently seeking junior frontend roles.",
+  };
+}
 
 export default function RootLayout({
   children,

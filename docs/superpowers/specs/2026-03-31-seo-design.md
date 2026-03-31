@@ -72,7 +72,7 @@ Returns a `1200×630` `ImageResponse`:
 - Below title: `description` in smaller Space Grotesk, muted, clamped to 2 lines
 - Bottom accent border line
 
-Fonts loaded inline from Google Fonts via `fetch` inside the route handler (cached by Next.js).
+Fonts loaded inside the route handler via `fetch` from Google Fonts, then passed to `ImageResponse` as `ArrayBuffer` (not CSS imports — `next/og` requires raw font data). Example: `fetch('https://fonts.gstatic.com/...').then(r => r.arrayBuffer())`.
 
 ### `app/sitemap.ts`
 
@@ -98,7 +98,7 @@ Returns:
 }
 ```
 
-Where `siteUrl` comes from the same `SITE_URL` env var as the sitemap.
+Where `siteUrl` comes from `process.env.SITE_URL || "http://localhost:3000"` — same fallback logic as the sitemap.
 
 ### JSON-LD — Homepage (`app/page.tsx`)
 
@@ -127,7 +127,7 @@ Two schemas inlined as `<script type="application/ld+json">` rendered inside the
 }
 ```
 
-`sameAs` is built from the contact links available in the DB. Only non-null links are included.
+`sameAs` is built from contact links in the DB that have `http://` or `https://` URLs only. `mailto:` and other non-URL link types are excluded (invalid in `schema.org/sameAs`). Only non-null links are included.
 
 ### JSON-LD — Project Pages (`app/projects/[slug]/page.tsx`)
 

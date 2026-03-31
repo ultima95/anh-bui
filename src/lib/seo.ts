@@ -55,3 +55,14 @@ export function buildMetadata(options: {
     },
   };
 }
+
+/**
+ * Safely serializes data as JSON for embedding in an HTML <script> tag.
+ * Escapes characters that could break out of a script context.
+ */
+export function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003C")
+    .replace(/>/g, "\\u003E")
+    .replace(/&/g, "\\u0026");
+}

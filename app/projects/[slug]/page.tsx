@@ -6,14 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { buildMetadata, getBaseUrl } from "@/src/lib/seo";
-
-function safeJsonLd(data: unknown): string {
-  return JSON.stringify(data)
-    .replace(/</g, "\\u003C")
-    .replace(/>/g, "\\u003E")
-    .replace(/&/g, "\\u0026");
-}
+import { buildMetadata, getBaseUrl, safeJsonLd } from "@/src/lib/seo";
 
 export const dynamic = "force-dynamic";
 

@@ -16,7 +16,7 @@ async function loadGoogleFont(
     { headers: { "User-Agent": "Mozilla/5.0 (X11; Linux x86_64)" } }
   ).then((r) => r.text());
 
-  const fontUrl = css.match(/src: url\((.+?)\) format\('woff2'\)/)?.[1];
+  const fontUrl = css.match(/src: url\((.+?)\) format\(['"](?:woff2|truetype)['"]\)/)?.[1];
   if (!fontUrl) throw new Error(`Failed to load font: ${family} ${weight}`);
 
   return fetch(fontUrl).then((r) => r.arrayBuffer());
@@ -24,9 +24,9 @@ async function loadGoogleFont(
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get("title") ?? "Anh Bui";
+  const title = searchParams.get("title")?.trim() || "Anh Bui";
   const description =
-    searchParams.get("description") ?? "Frontend Developer";
+    searchParams.get("description")?.trim() || "Frontend Developer";
 
   try {
     const [archivoBold, spaceGroteskRegular] = await Promise.all([
